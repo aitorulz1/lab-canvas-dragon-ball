@@ -9,7 +9,7 @@ class Obstacle {
     
     this.h = 38
     this.x = this.ctx.canvas.width
-    this.vx = -5  
+    this.vx = -1.5  
 
     this.img = new Image()
     this.img.src = "images/baby-cell.png"

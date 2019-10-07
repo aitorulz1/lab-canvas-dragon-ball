@@ -42,6 +42,17 @@ class Kameha {
 
     }
 
+    collide(cell) {
+      if (this.x < cell.x + cell.w &&
+      this.x + this.w > cell.x &&
+      this.y < cell.y + cell.h &&
+      this.h + this.y > cell.y){
+        cell.hits --
+        return true
+      }
+
+    }
+
     isVisible() {
       return true
     }
