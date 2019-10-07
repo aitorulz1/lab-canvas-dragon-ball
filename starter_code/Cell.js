@@ -2,7 +2,7 @@ class Cell {
     constructor(ctx) {
       this.ctx = ctx
   
-      this.y = (Math.random() * 300 + 20)
+      this.y = (Math.random() * 500 + 20)
       this.w = 319/8
       
       this.hits = 1

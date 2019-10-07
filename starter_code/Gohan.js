@@ -36,6 +36,11 @@ class Gohan {
     this.img.frames = 4
     this.img.frameIndex = 0
 
+    // this.imgR = new Image()
+    // this.img.src = "images/gohan-fast.png"
+    // this.img.frames = 2
+    // this.img.frameIndex = 0
+
     this.tick = 0
 
     this._setListeners()
@@ -62,8 +67,27 @@ class Gohan {
     this.tick++
 
     this.kameha.forEach(k => k.draw())
-  
+}
 
+
+drawR() {
+  this.ctx.drawImage(
+    this.imgR,
+    this.img.frameIndex * this.img.width / 2,
+    0,
+    this.img.width / 2,
+    this.img.height,
+    this.x,
+    this.y,
+    this.w = 125,
+    this.h
+  );
+
+  this._animate()
+
+  this.tick++
+
+  this.kameha.forEach(k => k.draw())
 }
 
   move() {
@@ -73,9 +97,6 @@ class Gohan {
     this.vx += this.ax
     this.vy += this.ay
     this.vy += this.g
-
-
-
 
     if (this.y > 500) { // Marca la distancia hasta la que puede llegar en +y y en -y
       this.y = this.yMax;
@@ -120,6 +141,7 @@ class Gohan {
     document.onkeydown = (e) => {
       if (e.keyCode === UP_KEY) {
         this.vy = 5
+        this._drawR()
       } else if (e.keyCode === DOWN_KEY) {
         this.vy = -5
       } else if (e.keyCode === RIGHT_KEY) {

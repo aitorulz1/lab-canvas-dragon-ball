@@ -9,6 +9,7 @@ class Game {
     this.kinton = [];
     this.obstacle = [];
     this.cell = [];
+    this.boo = [];
 
     this.intervalId = null;
 
@@ -26,6 +27,8 @@ class Game {
       this._clearObstacle();
       this._clearKinton();
       this._clearCell();
+      this._clearBoo();
+      
       this._checkCollisions();
     }, 1000 / 60);
   }
@@ -55,6 +58,13 @@ class Game {
     });
   }
 
+  _clearBoo() {
+    // Elimina Boo una vez ha pasado
+    this.boo = this.boo.filter(b => {
+      return b.y + b.h >= 0;
+    });
+  }
+
   _clear() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   }
@@ -70,8 +80,10 @@ class Game {
     this.kinton.forEach(ki => ki.draw());
     this.obstacle.forEach(o => o.draw());
     this.cell.forEach(ce => ce.draw());
-
+    this.boo.forEach(b => b.draw());
+    
     this.tick++;
+
 
     if (this.tick > Math.random() * 50 + 200) {
       this.tick = 0;
@@ -83,9 +95,14 @@ class Game {
       this._addObstacle();
     }
 
-    if (this.tick > Math.random() * 1 + 200) {
+    if (this.tick > Math.random() * 1 + 300) {
       this.tick = 0;
       this._addCell();
+    }
+
+    if (this.tick > Math.random() * 5 + 200) {
+      this.tick = 0;
+      this._addBoo();
     }
   }
 
@@ -109,6 +126,10 @@ class Game {
     this.cell.push(new Cell(this.ctx));
   }
 
+  _addBoo() {
+    this.boo.push(new Boo(this.ctx));
+  }
+
   // -----------------------
   //     MOVE
   // -----------------------
@@ -120,6 +141,8 @@ class Game {
     this.kinton.forEach(ki => ki.move());
     this.obstacle.forEach(o => o.move());
     this.cell.forEach(ce => ce.move());
+    this.boo.forEach(b => b.move());
+    console.log('sale')
   }
 
   // -----------------------
@@ -152,6 +175,11 @@ class Game {
       return ce.collide(this.gohan);
     });
 
+    const colB = this.boo.some(b => {
+      // Boo mata a Gohan
+      return b.collide(this.gohan);
+    });
+
     const colK = this.gohan.kameha.some(k => {
       // Kameha mata a Celljr
       return this.obstacle.some(obs => {
@@ -165,6 +193,15 @@ class Game {
         return k.collide(cel);
       });
     });
+
+    const colKb = this.gohan.kameha.some(k => {
+      // Kameha mata a Boo
+      return this.boo.some(boo => {
+        return k.collide(boo);
+      });
+    });
+
+
 
     // -----------------------
     //    WHAT HAPPENS WHEN CHECK COLISIONS
@@ -201,6 +238,17 @@ class Game {
       }
     }
 
+    if (colB) {
+      // Si Boo mata a Gohan
+      this.cell = []; // EL array de Cell se vacía
+      this.currentLife = document.querySelector(`.life${this.gohan.hits}`);
+      this.currentLife.classList.add("opacity-0");
+      this.gohan.hits--;
+      if (this.gohan.hits === 0) {
+        this._gameOver();
+      }
+    }
+
     if (colK) {
       // Si Kameha mata a celljr entonces...
       this._updateScore();
@@ -212,6 +260,13 @@ class Game {
       this._updateScore();
       console.log('tocado')
       this.cell = [];
+    }
+
+    if (colKb) {
+      // Si Kameha mata a cell entonces...
+      this._updateScore();
+      console.log('tocado')
+      this.boo = [];
     }
 
   }
@@ -230,5 +285,6 @@ class Game {
       this.ctx.canvas.width / 2,
       this.ctx.canvas.height / 2
     );
+    
   }
 }
