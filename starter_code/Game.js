@@ -27,15 +27,12 @@ class Game {
       this._clearKinton();
       this._clearCell();
       this._checkCollisions();
-      
     }, 1000 / 60);
   }
 
-
-  // ----------------------- 
+  // -----------------------
   //     CLEAR
-  // ----------------------- 
-
+  // -----------------------
 
   _clearObstacle() {
     // Elimina el obstaculo una vez ha pasado
@@ -62,12 +59,9 @@ class Game {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   }
 
-
-  // ----------------------- 
+  // -----------------------
   //     DRAW
-  // ----------------------- 
-
-
+  // -----------------------
 
   _draw() {
     this.bg.draw();
@@ -95,10 +89,9 @@ class Game {
     }
   }
 
-  // ----------------------- 
+  // -----------------------
   //     ADD
-  // ----------------------- 
-
+  // -----------------------
 
   _addObstacle() {
     this.obstacle.push(new Obstacle(this.ctx));
@@ -116,10 +109,9 @@ class Game {
     this.cell.push(new Cell(this.ctx));
   }
 
-  // ----------------------- 
+  // -----------------------
   //     MOVE
-  // ----------------------- 
-
+  // -----------------------
 
   _move() {
     this.bg.move();
@@ -130,23 +122,21 @@ class Game {
     this.cell.forEach(ce => ce.move());
   }
 
-  // ----------------------- 
+  // -----------------------
   //     SCORE
-  // ----------------------- 
-
+  // -----------------------
 
   _updateScore() {
     this.score++;
     document.querySelector(".score span").innerText = this.score;
   }
 
-
-  // ----------------------- 
+  // -----------------------
   //     CHECK COLISIONS
-  // ----------------------- 
-
+  // -----------------------
 
   _checkCollisions() {
+    
     const colH = this.kinton.some(ki => {
       // Kinton da vida a Gohan
       return ki.collide(this.gohan);
@@ -157,9 +147,9 @@ class Game {
       return o.collide(this.gohan);
     });
 
-    const colCe = this.obstacle.some(o => {
+    const colD = this.cell.some(ce => {
       // Cell mata a Gohan
-      return o.collide(this.gohan);
+      return ce.collide(this.gohan);
     });
 
     const colK = this.gohan.kameha.some(k => {
@@ -171,25 +161,22 @@ class Game {
 
     const colKc = this.gohan.kameha.some(k => {
       // Kameha mata a Cell
-      return this.obstacle.some(obs => {
-        return k.collide(obs);
+      return this.cell.some(cel => {
+        return k.collide(cel);
       });
     });
 
-
-  // ----------------------- 
-  //    WHAT HAPPENS WHEN CHECK COLISIONS
-  // ----------------------- 
-
-
-    if (colKc) {
-      this._updateScore();
-      this.obstacle = [];
-    }
-
-    if (colK) {
-      this._updateScore();
-      this.obstacle = [];
+    // -----------------------
+    //    WHAT HAPPENS WHEN CHECK COLISIONS
+    // -----------------------
+    
+    if (colH) {
+      // Si Kinton da vida a Gohan
+      this.kinton = []; // El array de Kinton se vacía (desaparece)
+      this.gohan.hits++;
+      console.log(this.currentLife);
+      this.currentLife = document.querySelector(`.life${this.gohan.hits}`);
+      this.currentLife.classList.remove("opacity-0");
     }
 
     if (colC) {
@@ -203,7 +190,7 @@ class Game {
       }
     }
 
-    if (colCe) {
+    if (colD) {
       // Si Cell mata a Gohan
       this.cell = []; // EL array de Cell se vacía
       this.currentLife = document.querySelector(`.life${this.gohan.hits}`);
@@ -214,22 +201,24 @@ class Game {
       }
     }
 
-    if (colH) {
-      // Si Kinton da vida a Gohan
-      this.kinton = []; // El array de Kinton se vacía (desaparece)
-      this.gohan.hits++;
-      console.log(this.currentLife);
-      this.currentLife = document.querySelector(`.life${this.gohan.hits}`);
-      this.currentLife.classList.remove("opacity-0");
+    if (colK) {
+      // Si Kameha mata a celljr entonces...
+      this._updateScore();
+      this.obstacle = [];
     }
+
+    if (colKc) {
+      // Si Kameha mata a cell entonces...
+      this._updateScore();
+      console.log('tocado')
+      this.cell = [];
+    }
+
   }
 
-
-  // ----------------------- 
+  // -----------------------
   //     GAME OVER
-  // ----------------------- 
-
-
+  // -----------------------
 
   _gameOver() {
     clearInterval(this.intervalId);
