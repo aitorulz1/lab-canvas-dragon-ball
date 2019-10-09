@@ -12,9 +12,8 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
-
 
 .arrows-img {
   width: 150px;
@@ -51,24 +50,22 @@ body {
   overflow: hidden;
 }
 
-canvas{
+canvas {
   border: 1px solid #000;
 }
 
-.cell{
+.cell {
   float: right;
 }
 
-.fireball{
-  background-image: url('images/energy-ball.png');
+.fireball {
+  background-image: url("images/energy-ball.png");
   background-repeat: no-repeat;
   width: 16px;
   height: 16px;
 }
 
-
-
-.container-lifes{
+.container-lifes {
   position: relative;
   top: 50px;
   float: left;
@@ -84,6 +81,15 @@ canvas{
   margin-right: 20px;
 }
 
-.opacity-0{
+.opacity-0 {
   opacity: 0;
+}
+
+#clock{
+  float: left;
+  position: absolute;
+  text-align: left;
+  left: 50%;
+  top: 70px;
+  font-family: comic sans ms;
 }

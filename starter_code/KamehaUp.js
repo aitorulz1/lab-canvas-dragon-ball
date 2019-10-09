@@ -1,4 +1,4 @@
-class Kameha {
+class KamehaUp {
   constructor(ctx, x, y) {
     this.ctx = ctx;
     this.y = y;
@@ -30,7 +30,7 @@ class Kameha {
 }
 
   move() {
-    this.x += this.vx;
+    this.y -= this.vy;
   }
 
   collide(obstacle) {
