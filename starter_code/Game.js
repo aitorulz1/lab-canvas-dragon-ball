@@ -192,6 +192,11 @@ class Game {
       return b.collide(this.gohan);
     });
 
+    // -----------------------
+    //    CHECK COLISIONS KAMEHA 
+    // -----------------------
+
+
     const colK = this.gohan.kameha.some(k => {
       // Kameha mata a Celljr
       return this.obstacle.some(obs => {
@@ -211,6 +216,33 @@ class Game {
       return this.boo.some(boo => {
         return (
             k.collide(boo)
+          )
+      });
+    });
+
+    // -----------------------
+    //    CHECK COLISIONS KAMEHA UP
+    // -----------------------
+
+    const colKu = this.gohan.kamehaUp.some(ku => {
+      // KamehaUp mata a Celljr
+      return this.obstacle.some(obs => {
+        return ku.collide(obs);
+      });
+    });
+
+    const colKcu = this.gohan.kamehaUp.some(ku => {
+      // KamehaUp mata a Cell
+      return this.cell.some(cel => {
+        return ku.collide(cel);
+      });
+    });
+
+    const colKbu = this.gohan.kamehaUp.some(ku => {
+      // KamehaUp mata a Boo
+      return this.boo.some(boo => {
+        return (
+            ku.collide(boo)
           )
       });
     });
@@ -265,6 +297,8 @@ class Game {
       }
     }
 
+/// KAMEHA
+
     if (colK) {
       // Si Kameha mata a celljr entonces...
       this._updateScore();
@@ -281,6 +315,29 @@ class Game {
     if (colKb) {
       console.log(this.boo);
       // Si Kameha mata a cell entonces...
+      this._updateScore();
+  
+      this.boo = this.boo.filter(b => b.hits === 1);
+    }
+
+/// KAMEHA UP
+
+    if (colKu) {
+      // Si Kameha UP mata a celljr entonces...
+      this._updateScore();
+      this.obstacle = this.obstacle.filter(o => o.hits === 1);
+    }
+
+    if (colKcu) {
+      // Si Kameha UP mata a cell entonces...
+      this._updateScore();
+      console.log("cell");
+      this.cell = this.cell.filter(ce => ce.hits === 1);
+    }
+
+    if (colKbu) {
+      console.log(this.boo);
+      // Si Kameha UP mata a cell entonces...
       this._updateScore();
   
       this.boo = this.boo.filter(b => b.hits === 1);

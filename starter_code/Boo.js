@@ -8,7 +8,7 @@ class Boo {
     this.hits = 1;
 
     this.h = 225 / 4;
-    this.x = Math.random() * 300 + 20;
+    this.x = Math.random() * 600 + 50;
     this.vy = 5;
 
     this.img = new Image();

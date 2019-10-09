@@ -43,12 +43,17 @@ class Gohan {
     this.imgR.frames = 2
     this.imgR.frameIndex = 0
 
+    this.imgR = new Image()
+    this.imgR.src = "images/shootUp6.png"
+    this.imgR.frames = 6
+    this.imgR.frameIndex = 0
+
     this.tick = 0;
 
     this._setListeners();
 
     this.kameha = [];
-    this.superKameha = [];
+    this.kamehaUp = [];
   }
 
   draw() {
@@ -90,6 +95,28 @@ class Gohan {
     this.tick++;
 
     this.kameha.forEach(k => k.draw());
+    this.kamehaUp.forEach(ku => ku.draw());
+  }
+
+  drawD() {
+    this.ctx.drawImage(
+      this.imgD,
+      (this.imgD.frameIndex * this.imgD.width) / 6,
+      0,
+      this.imgD.width / 6,
+      this.imgD.height,
+      this.x,
+      this.y,
+      (this.w = 125),
+      this.h
+    );
+
+    this._animate();
+
+    this.tick++;
+
+    his.kameha.forEach(k => k.draw());
+    this.kamehaUp.forEach(ku => ku.draw());
   }
 
   move() {
@@ -157,6 +184,7 @@ class Gohan {
         this._shoot();
       } else if (e.keyCode === D_KEY) {
         this._shootUP();
+        this._drawD();
       }
     };
 

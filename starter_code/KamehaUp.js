@@ -5,7 +5,7 @@ class KamehaUp {
     this.h = 16;
     this.w = 16;
     this.x = x;
-    this.vx = 10;
+    this.vy = 10;
 
     this.hits = 1;
 
