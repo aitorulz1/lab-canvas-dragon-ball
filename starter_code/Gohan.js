@@ -38,17 +38,15 @@ class Gohan {
     this.img.frames = 4;
     this.img.frameIndex = 0;
 
-    this.imgR = new Image()
-    this.imgR.src = "images/gohan-fast.png"
-    this.imgR.frames = 2
-    this.imgR.frameIndex = 0
-
-    this.imgR = new Image()
-    this.imgR.src = "images/shootUp6.png"
-    this.imgR.frames = 6
-    this.imgR.frameIndex = 0
-
     this.tick = 0;
+
+    this.actions = {
+      up: false,
+      down: false,
+      
+
+
+    }
 
     this._setListeners();
 
@@ -77,49 +75,8 @@ class Gohan {
     this.kamehaUp.forEach(ku => ku.draw());
   }
 
-  drawR() {
-    this.ctx.drawImage(
-      this.imgR,
-      (this.imgR.frameIndex * this.imgR.width) / 2,
-      0,
-      this.imgR.width / 2,
-      this.imgR.height,
-      this.x,
-      this.y,
-      (this.w = 125),
-      this.h
-    );
-
-    this._animate();
-
-    this.tick++;
-
-    this.kameha.forEach(k => k.draw());
-    this.kamehaUp.forEach(ku => ku.draw());
-  }
-
-  drawD() {
-    this.ctx.drawImage(
-      this.imgD,
-      (this.imgD.frameIndex * this.imgD.width) / 6,
-      0,
-      this.imgD.width / 6,
-      this.imgD.height,
-      this.x,
-      this.y,
-      (this.w = 125),
-      this.h
-    );
-
-    this._animate();
-
-    this.tick++;
-
-    his.kameha.forEach(k => k.draw());
-    this.kamehaUp.forEach(ku => ku.draw());
-  }
-
   move() {
+
     this.y += this.vy;
     this.x += this.vx;
 
@@ -160,13 +117,26 @@ class Gohan {
   _shoot() {
     this.kameSound.play();
     this.kameha.push(new Kameha(this.ctx, this.x + this.w, this.y + this.h));
-    console.log(this.kameha);
   }
 
   _shootUP() {
     this.kameSound.play();
-    this.kamehaUp.push(new Kameha(this.ctx, this.x + this.w, this.y + this.h));
-    console.log(this.kamehaUp);
+    this.kamehaUp.push(new KamehaUp(this.ctx, this.x + this.w, this.y + this.h));
+
+  }
+
+  _applyActions(){
+    if(this.actions.up) {
+      this.img.src = "images/gohan-fast.png";
+    }
+  }
+
+  _switchActions(key, apply){
+    switch (key){
+      case D_KEY:
+        this.actions.up = apply
+        break
+    }
   }
 
   _setListeners() {
@@ -177,14 +147,13 @@ class Gohan {
         this.vy = -5;
       } else if (e.keyCode === RIGHT_KEY) {
         this.vx = 7.5;
-        this._drawR();
       } else if (e.keyCode === LEFT_KEY) {
         this.vx = -7.5;
       } else if (e.keyCode === S_KEY) {
         this._shoot();
       } else if (e.keyCode === D_KEY) {
+        this.img.src = "images/gohan-fast.png";
         this._shootUP();
-        this._drawD();
       }
     };
 

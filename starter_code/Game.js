@@ -1,8 +1,12 @@
+const G_KEY = 71;
+
+paused = false;
+
 class Game {
   constructor(ctx) {
     this.ctx = ctx;
 
-    this.pause = true;
+    
 
     this.bg = new Background(ctx);
     this.gohan = new Gohan(ctx);
@@ -17,20 +21,28 @@ class Game {
 
     this.tick = 0;
 
+    // this.togglePause();
+    // this._setListeners();
+
     this.score = 0;
     this.currentLife = document.querySelector(`.life${this.gohan.hits}`);
 
     // this.GameAudio = new Audio('http://www.tonosfrikis.com/melodias/movil/bola_de_dragon_z_luz_fuego_destruccion_694.html')
-    this.kill = new Audio ('http://www.sonidosmp3gratis.com/sounds/dragon-ball-z-scream.mp3')
-    this.life = new Audio ('http://www.sonidosmp3gratis.com/sounds/dragon-ball-gt-super-saiyan.mp3')
-    this.gameOverAudio = new Audio('http://www.sonidosmp3gratis.com/sounds/mario-bros-mamma-mia')
+    this.kill = new Audio(
+      "http://www.sonidosmp3gratis.com/sounds/dragon-ball-z-scream.mp3"
+    );
+    this.life = new Audio(
+      "http://www.sonidosmp3gratis.com/sounds/dragon-ball-gt-super-saiyan.mp3"
+    );
+    this.gameOverAudio = new Audio(
+      "http://www.sonidosmp3gratis.com/sounds/mario-bros-mamma-mia"
+    );
   }
 
   run() {
     // this.GameAudio.play()
 
     this.intervalId = setInterval(() => {
-      
       this._clear();
       this._draw();
       this._move();
@@ -44,7 +56,7 @@ class Game {
   }
 
   stopClick() {
-    clearInterval(this.intervalId)
+    clearInterval(this.intervalId);
   }
 
   // -----------------------
@@ -97,6 +109,10 @@ class Game {
     this.boo.forEach(b => b.draw());
 
     this.tick++;
+
+    // if (!paused) {
+    //   update();
+    // }
 
     if (this.tick > Math.random() * 50 + 200) {
       this.tick = 0;
@@ -155,7 +171,6 @@ class Game {
     this.obstacle.forEach(o => o.move());
     this.cell.forEach(ce => ce.move());
     this.boo.forEach(b => b.move());
-    console.log("sale");
   }
 
   // -----------------------
@@ -165,6 +180,27 @@ class Game {
   _updateScore() {
     this.score++;
     document.querySelector(".score span").innerText = this.score;
+  }
+
+  // -----------------------
+  //     PAUSE
+  // -----------------------
+
+   togglePause() {
+      if (!paused){
+          paused = true;
+      } else if (paused) {
+         paused= false;
+      }
+  
+  }
+
+  _setListeners() {
+    document.onkeydown = e => {
+      if (e.keyCode === G_KEY) {
+        this.togglePause();
+      }
+    };
   }
 
   // -----------------------
@@ -193,9 +229,8 @@ class Game {
     });
 
     // -----------------------
-    //    CHECK COLISIONS KAMEHA 
+    //    CHECK COLISIONS KAMEHA
     // -----------------------
-
 
     const colK = this.gohan.kameha.some(k => {
       // Kameha mata a Celljr
@@ -214,9 +249,7 @@ class Game {
     const colKb = this.gohan.kameha.some(k => {
       // Kameha mata a Boo
       return this.boo.some(boo => {
-        return (
-            k.collide(boo)
-          )
+        return k.collide(boo);
       });
     });
 
@@ -241,9 +274,7 @@ class Game {
     const colKbu = this.gohan.kamehaUp.some(ku => {
       // KamehaUp mata a Boo
       return this.boo.some(boo => {
-        return (
-            ku.collide(boo)
-          )
+        return ku.collide(boo);
       });
     });
 
@@ -256,7 +287,6 @@ class Game {
       this.life.play();
       this.kinton = []; // El array de Kinton se vacía (desaparece)
       this.gohan.hits++;
-      console.log(this.currentLife);
       this.currentLife = document.querySelector(`.life${this.gohan.hits}`);
       this.currentLife.classList.remove("opacity-0");
     }
@@ -297,7 +327,7 @@ class Game {
       }
     }
 
-/// KAMEHA
+    /// KAMEHA
 
     if (colK) {
       // Si Kameha mata a celljr entonces...
@@ -308,19 +338,16 @@ class Game {
     if (colKc) {
       // Si Kameha mata a cell entonces...
       this._updateScore();
-      console.log("cell");
       this.cell = this.cell.filter(ce => ce.hits === 1);
     }
 
     if (colKb) {
-      console.log(this.boo);
       // Si Kameha mata a cell entonces...
       this._updateScore();
-  
       this.boo = this.boo.filter(b => b.hits === 1);
     }
 
-/// KAMEHA UP
+    /// KAMEHA UP
 
     if (colKu) {
       // Si Kameha UP mata a celljr entonces...
@@ -331,23 +358,15 @@ class Game {
     if (colKcu) {
       // Si Kameha UP mata a cell entonces...
       this._updateScore();
-      console.log("cell");
       this.cell = this.cell.filter(ce => ce.hits === 1);
     }
 
     if (colKbu) {
-      console.log(this.boo);
       // Si Kameha UP mata a cell entonces...
       this._updateScore();
-  
       this.boo = this.boo.filter(b => b.hits === 1);
     }
   }
-
-
-
-
-
 
   // -----------------------
   //     GAME OVER
