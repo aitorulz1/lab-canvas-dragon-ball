@@ -55,7 +55,6 @@ class Game {
     }, 1000 / 60);
   }
 
-
   // -----------------------
   //     CLEAR
   // -----------------------
@@ -107,8 +106,7 @@ class Game {
 
     this.tick++;
 
-
-    if (this.tick > Math.random() * 15 + 25) {
+    if (this.tick > Math.random() * 25 + 25) {
       this.tick = 0;
       this._addLife();
     }
@@ -176,7 +174,6 @@ class Game {
     document.querySelector(".score span").innerText = this.score;
   }
 
-
   // -----------------------
   //    START / PAUSE
   // -----------------------
@@ -184,18 +181,35 @@ class Game {
   togglePause() {
     if (!this.paused) {
       this.paused = true;
+    pausebutton.innerText = "PLAY";
+    pausebutton.setAttribute("class", "pausebutton");
     } else if (this.paused) {
       this.paused = false;
+      pausebutton.innerText = "PAUSE";
+      pausebutton.setAttribute("class", "playbutton");
     }
   }
 
+  // togglePause() {
+  //   if (!this.paused) {
+  //     this.paused = true;
+  //     pausebutton.innerText = "PLAY";
+  //     pausebutton.setAttribute("id", "playbutton");
+  //   } else if (this.paused) {
+  //     this.paused = false;
+  //     pausebutton.innerText = "PAUSE";
+  //     pausebutton.setAttribute("id", "pausebutton");
+  //   }
+  // }
+
+
   _setListeners() {
     document.getElementById("start-button").onclick = () => {
-    this.run();
+      this.run();
     };
-    
-    document.getElementById("reset-button").onclick = () => {
-    this.togglePause();
+
+    document.getElementById("pausebutton").onclick = () => {
+      this.togglePause();
     };
   }
 

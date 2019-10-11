@@ -31,13 +31,25 @@ body {
   text-shadow: -1px -1px rgba(0, 0, 0, 1);
 }
 
-#reset-button {
+#pausebutton {
   font-size: 20px;
   background-color: #fae902;
   color: rgb(187, 0, 0);
   padding: 10px 25px;
   background-color: #fae902;
   border: 5px outset #fae902;
+  box-shadow: 0;
+  margin-top: 20px;
+  text-shadow: -1px -1px rgba(0, 0, 0, 1);
+}
+
+#playbutton {
+  font-size: 20px;
+  background-color:  rgb(187, 0, 0);
+  color: #fae902;
+  padding: 10px 25px;
+  background-color:  rgb(187, 0, 0);
+  border: 5px outset rgb(187, 0, 0)02;
   box-shadow: 0;
   margin-top: 20px;
   text-shadow: -1px -1px rgba(0, 0, 0, 1);
