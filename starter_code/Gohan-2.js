@@ -1,9 +1,9 @@
-const UP_KEY = 40;
-const DOWN_KEY = 38;
-const S_KEY = 83;
-const RIGHT_KEY = 39;
-const LEFT_KEY = 37;
-const D_KEY = 68;
+const UP_KEY = 40
+const DOWN_KEY = 38
+const S_KEY = 83
+const RIGHT_KEY = 39
+const LEFT_KEY = 37
+const D_KEY = 68
 
 class Gohan {
   constructor(ctx) {
@@ -31,7 +31,9 @@ class Gohan {
 
     this.g = 0.09;
 
-    this.kameSound = new Audio('http://www.sonidosmp3gratis.com/sounds/ball-dragon-gt-jump.mp3');
+    this.kameSound = new Audio(
+      "http://www.sonidosmp3gratis.com/sounds/ball-dragon-gt-jump.mp3"
+    );
 
     this.img = new Image();
     this.img.src = "images/gohan-long.png";
@@ -42,11 +44,8 @@ class Gohan {
 
     this.actions = {
       up: false,
-      down: false,
-      
-
-
-    }
+      down: false
+    };
 
     this._setListeners();
 
@@ -67,7 +66,7 @@ class Gohan {
       this.h
     );
 
-    this._animate();
+    
 
     this.tick++;
 
@@ -76,6 +75,8 @@ class Gohan {
   }
 
   move() {
+    this._animate()
+    this._applyActions(); 
 
     this.y += this.vy;
     this.x += this.vx;
@@ -121,55 +122,69 @@ class Gohan {
 
   _shootUP() {
     this.kameSound.play();
-    this.kamehaUp.push(new KamehaUp(this.ctx, this.x + this.w, this.y + this.h));
-
+    this.kamehaUp.push(
+      new KamehaUp(this.ctx, this.x + this.w, this.y + this.h)
+    );
   }
 
-  _applyActions(){
-    if(this.actions.d) {
-      this.img.src = "images/gohan-kamehUp.png";
+    _setListeners() {
+    document.onkeydown = e => {
+      document.onkeydown = e => this._switchAction(e.keyCode, true);
+      document.onkeyup = e => this._switchAction(e.keyCode, false);
     }
   }
 
-  _switchAction(key, apply){
-    switch (key){
+  _applyActions() {
+    if (this.actions.up) {
+      this.vy = 7.5;
+    }else{
+      this.vy = 0;
+    }
+    if (this.actions.down) {
+      this.vy = -5;
+    }else{
+      this.vy = 0;
+    }
+    if (this.actions.right) {
+      this.vx = 7.5;
+    }else{
+      this.vx = 0;
+    }
+    if (this.actions.left) {
+      this.vx = -7.5;
+    }
+    if (this.actions.s) {
+      this._shoot();
+    }
+    if (this.actions.d) {
+      this._switchAction;
+      this._shootUP();
+    }
+  }
+
+  _switchAction(key, apply) {
+    switch (key) {
+      case UP_KEY:
+        this.actions.up = apply
+        break
+      case DOWN_KEY:
+        this.actions.down = apply
+        break
+      case RIGHT_KEY:
+        this.actions.right = apply
+        break
+      case LEFT_KEY:
+        this.actions.left = apply
+        break
+      case S_KEY:
+        this.actions.s = apply
+        break
       case D_KEY:
         this.actions.d = apply
         break
     }
   }
 
-  _setListeners() {
-    document.onkeydown = e => {
-      if (e.keyCode === UP_KEY) {
-        this.vy = 7.5;
-      } else if (e.keyCode === DOWN_KEY) {
-        this.vy = -5;
-      } else if (e.keyCode === RIGHT_KEY) {
-        this.img.src = "images/gohan-fast.png";
-        this.vx = 7.5;
-      } else if (e.keyCode === LEFT_KEY) {
-        this.vx = -7.5;
-      } else if (e.keyCode === S_KEY) {
-        this._shoot();
-      } else if (e.keyCode === D_KEY) {
-        this.img.src = "images/gohan-kamehaUp.png";
-        this._shootUP();
-      }
-    };
 
-    document.onkeyup = e => {
-      if (e.keyCode === UP_KEY) {
-        this.vy = 0;
-      } else if (e.keyCode === DOWN_KEY) {
-        this.vy = 0;
-      } else if (e.keyCode === RIGHT_KEY) {
-        this.img.src = "images/gohan-long.png";
-        this.vx = 0;
-      } else if (e.keyCode === D_KEY) {
-        this.img.src = "images/gohan-long.png";
-        
-      }
-    };
   }
-}
+

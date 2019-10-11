@@ -1,12 +1,8 @@
 const G_KEY = 71;
 
-paused = false;
-
 class Game {
   constructor(ctx) {
     this.ctx = ctx;
-
-    
 
     this.bg = new Background(ctx);
     this.gohan = new Gohan(ctx);
@@ -21,8 +17,10 @@ class Game {
 
     this.tick = 0;
 
+    this.paused = false;
+
     // this.togglePause();
-    // this._setListeners();
+    this._setListeners();
 
     this.score = 0;
     this.currentLife = document.querySelector(`.life${this.gohan.hits}`);
@@ -43,21 +41,20 @@ class Game {
     // this.GameAudio.play()
 
     this.intervalId = setInterval(() => {
-      this._clear();
-      this._draw();
-      this._move();
-      this._clearObstacle();
-      this._clearKinton();
-      this._clearCell();
-      this._clearBoo();
+      if (!this.paused) {
+        this._clear();
+        this._draw();
+        this._move();
+        this._clearObstacle();
+        this._clearKinton();
+        this._clearCell();
+        this._clearBoo();
 
-      this._checkCollisions();
+        this._checkCollisions();
+      }
     }, 1000 / 60);
   }
 
-  stopClick() {
-    clearInterval(this.intervalId);
-  }
 
   // -----------------------
   //     CLEAR
@@ -110,11 +107,8 @@ class Game {
 
     this.tick++;
 
-    // if (!paused) {
-    //   update();
-    // }
 
-    if (this.tick > Math.random() * 50 + 200) {
+    if (this.tick > Math.random() * 15 + 25) {
       this.tick = 0;
       this._addLife();
     }
@@ -182,24 +176,26 @@ class Game {
     document.querySelector(".score span").innerText = this.score;
   }
 
+
   // -----------------------
-  //     PAUSE
+  //    START / PAUSE
   // -----------------------
 
-   togglePause() {
-      if (!paused){
-          paused = true;
-      } else if (paused) {
-         paused= false;
-      }
-  
+  togglePause() {
+    if (!this.paused) {
+      this.paused = true;
+    } else if (this.paused) {
+      this.paused = false;
+    }
   }
 
   _setListeners() {
-    document.onkeydown = e => {
-      if (e.keyCode === G_KEY) {
-        this.togglePause();
-      }
+    document.getElementById("start-button").onclick = () => {
+    this.run();
+    };
+    
+    document.getElementById("reset-button").onclick = () => {
+    this.togglePause();
     };
   }
 

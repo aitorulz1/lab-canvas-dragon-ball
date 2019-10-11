@@ -2,17 +2,17 @@ window.onload = function() {
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
 
-  document.getElementById("start-button").onclick = function() {
-    startGame();
-  };
-  // document.getElementById("reset-button").onclick = function() {
-  //   pauseGame();
+  const game = new Game(ctx);
+  
+  // document.getElementById("start-button").onclick = function() {
+  //   startGame();
   // };
 
-  function startGame() {
-    const game = new Game(ctx);
-    game.run();
-  }
+
+  // function startGame() {
+  //   
+  //   game.run();
+  // }
   
 
 };
