@@ -71,17 +71,5 @@ class Kinton {
     }
   }
 
-  collide(gohan2) {
-    if (
-      this.x < gohan.x + gohan.w &&
-      this.x + this.w > gohan.x &&
-      this.y < gohan.y + gohan.h &&
-      this.h + this.y > gohan.y
-    ) {
-      // this.hits = 0
-      // gohan.hits++
-      console.log(gohan.hits);
-      return true;
-    }
   }
-}
+

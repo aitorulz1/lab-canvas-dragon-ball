@@ -106,7 +106,7 @@ class Game {
 
     this.tick++;
 
-    if (this.tick > Math.random() * 25 + 25) {
+    if (this.tick > Math.random() * 20 + 20) {
       this.tick = 0;
       this._addLife();
     }
