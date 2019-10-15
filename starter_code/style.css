@@ -105,3 +105,49 @@ canvas {
   top: 70px;
   font-family: comic sans ms;
 }
+
+#initial-screen {
+  background-image: url(images/initial-screen.jpg);
+  height: 554px; 
+  width: 757px;
+  position: absolute;
+  z-index: 100;
+}
+
+
+.mission{
+  height: 150px;
+  position: relative;
+  vertical-align: middle;
+}
+
+
+.gohan-moves{
+  float: left;
+  width: 33%;
+}
+
+.gohan-moves img{
+  display: unset;
+  width: 90%;
+}
+
+.gohan-pic{
+  float: left;
+  width: 33%;
+}
+
+.gohan-pic img{
+  display: unset;
+  width: 60%;
+}
+
+.villan-moves{
+  float: left;
+  width: 33%;
+}
+
+.villan-moves img{
+  display: unset;
+  width: 75%;
+}

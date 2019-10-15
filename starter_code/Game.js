@@ -172,6 +172,9 @@ class Game {
   _updateScore() {
     this.score++;
     document.querySelector(".score span").innerText = this.score;
+    if(this.score === 100){
+      this._gameFinish();
+    }
   }
 
   // -----------------------
@@ -206,6 +209,7 @@ class Game {
   _setListeners() {
     document.getElementById("start-button").onclick = () => {
       this.run();
+      document.getElementById("initial-screen").remove();
     };
 
     document.getElementById("pausebutton").onclick = () => {
@@ -377,6 +381,24 @@ class Game {
       this.boo = this.boo.filter(b => b.hits === 1);
     }
   }
+
+
+  // -----------------------
+  //     GAME FINISHED - YOU WIN
+  // -----------------------
+
+  _gameFinish() {
+    clearInterval(this.intervalId);
+
+    this.ctx.font = "40px Comic Sans MS";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText(
+      "YOU SAVED THE WORLD!",
+      this.ctx.canvas.width / 2,
+      this.ctx.canvas.height / 2
+    );
+  }
+
 
   // -----------------------
   //     GAME OVER
