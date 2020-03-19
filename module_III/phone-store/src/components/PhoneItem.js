@@ -8,7 +8,7 @@ const PhoneItem = ({id, name, img}) => {
                 <img src="{img}" className="card-img-top" alt="" />
                     <div className="card-body">
                         <h5 className="card-title">{name}</h5>
-                        <h5 className="card-img" style={{overflow:'hidden'}}><img src ={img} /></h5>
+                        <h5 className="card-img" style={{overflow:'hidden'}}><img src ={img} alt="" /></h5>
                         <Link to={`/catalog/${id}`}>See Details</Link>
                     </div>
             </div>
@@ -17,3 +17,4 @@ const PhoneItem = ({id, name, img}) => {
 }
 
 export default PhoneItem
+

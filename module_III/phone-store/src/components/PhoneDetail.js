@@ -9,15 +9,18 @@ const PhoneDetail = (props) => {
     return(
         <div className="PhoneDetail" style={{ marginTop: '100px'}}>
             <div class="container">
-                <div className="row min-vh-100 justify-container-center">
-                    <div className="col-4">
-                        <img className="w-100" alt="" src={phone.img} />
-                    </div>
-                    <div className="col-4">
-                        <h1 className="text-left">
+
+            <div className="">
+                        <h1 className="text-center">
                             {phone.name}
                         </h1>
                     </div>
+
+                <div className="row min-vh-100 justify-container-center">
+                    <div className="">
+                        <img className="" alt="" src={phone.img} />
+                    </div>
+
                 </div>
             </div>
         </div>
