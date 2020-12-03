@@ -13,7 +13,7 @@ function Auth() {
             <Image src={instagram} />
 
                 <div className="container-form">
-                    {showLogin ? <p>Formulario Login</p> : <p>Formulario de Registro</p>}
+                    {showLogin ? <p>Formulario Login</p> : <p><RegisterForm setShowLogin={setShowLogin }/></p>}
                 </div>
 
                 <div className="change-form">
