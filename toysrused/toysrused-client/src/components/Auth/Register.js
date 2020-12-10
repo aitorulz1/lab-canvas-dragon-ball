@@ -4,26 +4,40 @@ import clienteAxios from '../../service/axios';
 const Register = () => {
 
     const [ data, guardarData ] = useState({
-        nombre:'',
-        username:'',
-        email:'',
-        password:''
+        name: '',
+        username: '',
+        email: '',
+        password: ''
     });
-
-    const { nombre, username, email, password } = data;
-
     const [ error, guardarError ] = useState(false);
+
+    const { name, username, email, password } = data;
+
+    const onChange = e => {
+        guardarData({
+            ...data,
+            [e.target.name] : e.target.value
+        })
+    }
 
     const onSubmit = e => {
         e.preventDefault();
 
-        if(nombre.trim() || username.trim() || email.trim() || password.trim() === '' )  {
+        if(name.trim() === '' || username.trim() === '' || email.trim() === '' || password.trim() === '' )  {
             guardarError(true);
             return;
         }
 
         guardarError(false);
-        console.log(data)
+
+        guardarData({
+            name: '',
+            username: '',
+            email: '',
+            password: ''
+        });
+
+
     }
 
     return(
@@ -31,40 +45,40 @@ const Register = () => {
             onSubmit={onSubmit}
         >
 
+            {error ? 'Todos los campos son obligatorios' : null}
+
             <input 
                 type="text"
-                placeholder="Nombre"
-                value={nombre}
-                onChange={e => guardarData(e.target.value)}
+                placeholder="name"
+                value={name}
+                name="name"
+                onChange={onChange}
             />
 
             <input 
                 type="text"
-                placeholder="Username"
+                placeholder="username"
                 value={username}
-                onChange={e => guardarData(e.target.value)}
+                name="username"
+                onChange={onChange}
             />
 
             <input 
-                type="email"
-                placeholder="Email"
+                type="text"
+                placeholder="email"
                 value={email}
-                onChange={e => guardarData(e.target.value)}
+                name="email"
+                onChange={onChange}
             />
 
             <input 
                 type="password"
-                placeholder="Password"
+                placeholder="password"
                 value={password}
-                onChange={e => guardarData(e.target.value)}
+                name="password"
+                onChange={onChange}
             />
-
-            {/* <input 
-                type="text"
-                placeholder="Repeat password"
-                value={repeatPassword}
-                onChange={e => guardarData(e.target.value)}
-            /> */}
+    
             
             <input
                 type="submit"
