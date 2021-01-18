@@ -50,32 +50,32 @@ const Register = () => {
             <input 
                 type="text"
                 placeholder="name"
-                value={name}
                 name="name"
+                value={name}
                 onChange={onChange}
             />
 
             <input 
                 type="text"
                 placeholder="username"
-                value={username}
                 name="username"
+                value={username}
                 onChange={onChange}
             />
 
             <input 
                 type="text"
                 placeholder="email"
-                value={email}
                 name="email"
+                value={email}
                 onChange={onChange}
             />
 
             <input 
                 type="password"
                 placeholder="password"
-                value={password}
                 name="password"
+                value={password}
                 onChange={onChange}
             />
     
@@ -83,7 +83,7 @@ const Register = () => {
             <input
                 type="submit"
                 value="Registrarse"
-            />
+                />
 
         </form>
     )

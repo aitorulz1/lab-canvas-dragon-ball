@@ -1,22 +1,32 @@
 import React from 'react';
-import { BrowserRouter, Route} from 'react-router-dom';
-import { Switch } from 'react-router';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './components/Main/Home';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import AllCategories from './components/Main/AllCategories';
 
+import AuthState from './context/auth/authState';
+
+import tokenAuth from './config/token';
+
+const token = localStorage.getItem('token');
+if(token) {
+  tokenAuth(token);
+}
+console.log(token)
+
+
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/categories" component={AllCategories} />
-      </Switch>
-    </BrowserRouter>
+
+      <Router>
+        <Switch>
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+        </Switch>
+      </Router>
+
   );
 }
 
